@@ -66,7 +66,7 @@
 			         	echo"	
 			         			<div class='col-md-4 resent-grid recommended-grid slider-top-grids'>
 									<div class='resent-grid-img recommended-grid-img'>
-										<a href='views.php?ID=". $row["Indexes"]."&t=0'><img src='../Thumbnail/". $row["Thumbnail"].".jpg' alt='' /></a>
+										<a href='insert_views.php?ID=". $row["Indexes"]."&t=0'><img src='../Thumbnail/". $row["Thumbnail"].".jpg' alt='' /></a>
 										<div class='time'>
 											<p>". $row["Times"]."</p>
 										</div>
@@ -75,7 +75,7 @@
 										</div>
 									</div>
 									<div class='resent-grid-info recommended-grid-info'>
-										<h3><a href='views.php?ID=". $row["Indexes"]."&t=0' class='title title-info'>". $row["Judul"]."</a></h3>
+										<h3><a href='insert_views.php?ID=". $row["Indexes"]."&t=0' class='title title-info'>". $row["Judul"]."</a></h3>
 										<ul>
 											<li><p class='author author-info'><a href='#'' class='author'>". $row["Uploader"]."</a></p></li>
 											<li class='right-list'><p class='views views-info'>". $row["Views"]." views</p></li>
@@ -94,7 +94,7 @@
 			         	echo"	
 			         			<div class='col-md-3 resent-grid recommended-grid'>
 									<div class='resent-grid-img recommended-grid-img'>
-										<a href='views.php?ID=". $row1["Indexes"]."&t=0'><img src='../Thumbnail/". $row1["Thumbnail"].".jpg' alt='' /></a>
+										<a href='insert_views.php?ID=". $row1["Indexes"]."&t=0'><img src='../Thumbnail/". $row1["Thumbnail"].".jpg' alt='' /></a>
 										<div class='time small-time'>
 											<p>". $row["Times"]."</p>
 										</div>
@@ -103,7 +103,7 @@
 										</div>
 									</div>
 									<div class='resent-grid-info recommended-grid-info video-info-grid'>
-										<h5><a href='views.php?ID=". $row1["Indexes"]."&t=0' class='title'>". $row1["Judul"]."</a></h5>
+										<h5><a href='insert_views.php?ID=". $row1["Indexes"]."&t=0' class='title'>". $row1["Judul"]."</a></h5>
 										<ul>
 											<li><p class='author author-info'><a href='#'' class='author'>". $row1["Uploader"]."</a></p></li>
 											<li class='right-list'><p class='views views-info'>". $row1["Views"]." views</p></li>

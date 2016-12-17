@@ -8,10 +8,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
 <?php
-	include("connect.php");
+	include("../connect.php");
+	session_start();
+	if(!isset($_SESSION['user'])) header('Location: ../index.php');
 	$index = $_GET['ID'];
 	$sql = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video Where Indexes = $index";
+	$sql_comment = "SELECT Id_User, Message, Insert_Time FROM Comment Where Id_Video = $index";	
 	$result = $conn->query($sql);
+	$result_comment = $conn->query($sql_comment);
+	
 	function curPageURL() {
 	 $pageURL = 'http';
 	 if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
@@ -31,12 +36,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap -->
-<link href="css/bootstrap.min.css" rel='stylesheet' type='text/css' media="all" />
+<link href="../css/bootstrap.min.css" rel='stylesheet' type='text/css' media="all" />
 <!-- //bootstrap -->
-<link href="css/dashboard.css" rel="stylesheet">
+<link href="../css/dashboard.css" rel="stylesheet">
 <!-- Custom Theme files -->
-<link href="css/style.css" rel='stylesheet' type='text/css' media="all" />
-<script src="js/jquery-1.11.1.min.js"></script>
+<link href="../css/style.css" rel='stylesheet' type='text/css' media="all" />
+<script src="../js/jquery-1.11.1.min.js"></script>
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -54,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php"><h1><img src="images/sportify.png" width="153px" height="49px" /></h1></a>
+          <a class="navbar-brand" href="index.php"><h1><img src="../images/sportify.png" width="153px" height="49px" /></h1></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 			<div class="top-search">
@@ -65,178 +70,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>  
 			<div class="header-top-right">
 				<div class="file">
-					<a href="upload.html">Upload</a>
+					<h5>Welcome, <?php echo $_SESSION['user'];?></h5>
 				</div>	
-				<div class="signin">
-					<a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Sign Up</a>
-					<!-- pop-up-box -->
-									<script type="text/javascript" src="js/modernizr.custom.min.js"></script>    
-									<link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
-									<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
-									<!--//pop-up-box -->
-									<div id="small-dialog2" class="mfp-hide">
-										<h3>Create Account</h3> 
-										<div class="social-sits">
-											<div class="facebook-button">
-												<a href="#">Connect with Facebook</a>
-											</div>
-											<div class="chrome-button">
-												<a href="#">Connect with Google</a>
-											</div>
-											<div class="button-bottom">
-												<p>Already have an account? <a href="#small-dialog" class="play-icon popup-with-zoom-anim">Login</a></p>
-											</div>
-										</div>
-										<div class="signup">
-											<form>
-												<input type="text" class="email" placeholder="Mobile Number" maxlength="10" pattern="[1-9]{1}\d{9}" title="Enter a valid mobile number" />
-											</form>
-											<div class="continue-button">
-												<a href="#small-dialog3" class="hvr-shutter-out-horizontal play-icon popup-with-zoom-anim">CONTINUE</a>
-											</div>
-										</div>
-										<div class="clearfix"> </div>
-									</div>	
-									<div id="small-dialog3" class="mfp-hide">
-										<h3>Create Account</h3> 
-										<div class="social-sits">
-											<div class="facebook-button">
-												<a href="#">Connect with Facebook</a>
-											</div>
-											<div class="chrome-button">
-												<a href="#">Connect with Google</a>
-											</div>
-											<div class="button-bottom">
-												<p>Already have an account? <a href="#small-dialog" class="play-icon popup-with-zoom-anim">Login</a></p>
-											</div>
-										</div>
-										<div class="signup">
-											<form>
-												<input type="text" class="email" placeholder="Email" required="required" pattern="([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?" title="Enter a valid email"/>
-												<input type="password" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
-												<input type="text" class="email" placeholder="Mobile Number" maxlength="10" pattern="[1-9]{1}\d{9}" title="Enter a valid mobile number" />
-												<input type="submit"  value="Sign Up"/>
-											</form>
-										</div>
-										<div class="clearfix"> </div>
-									</div>	
-									<div id="small-dialog7" class="mfp-hide">
-										<h3>Create Account</h3> 
-										<div class="social-sits">
-											<div class="facebook-button">
-												<a href="#">Connect with Facebook</a>
-											</div>
-											<div class="chrome-button">
-												<a href="#">Connect with Google</a>
-											</div>
-											<div class="button-bottom">
-												<p>Already have an account? <a href="#small-dialog" class="play-icon popup-with-zoom-anim">Login</a></p>
-											</div>
-										</div>
-										<div class="signup">
-											<form action="upload.html">
-												<input type="text" class="email" placeholder="Email" required="required" pattern="([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?" title="Enter a valid email"/>
-												<input type="password" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
-												<input type="submit"  value="Sign In"/>
-											</form>
-										</div>
-										<div class="clearfix"> </div>
-									</div>	
-									<div id="small-dialog4" class="mfp-hide">
-										<h3>Feedback</h3> 
-										<div class="feedback-grids">
-											<div class="feedback-grid">
-												<p>Suspendisse tristique magna ut urna pellentesque, ut egestas velit faucibus. Nullam mattis lectus ullamcorper dui dignissim, sit amet egestas orci ullamcorper.</p>
-											</div>
-											<div class="button-bottom">
-												<p><a href="#small-dialog" class="play-icon popup-with-zoom-anim">Sign in</a> to get started.</p>
-											</div>
-										</div>
-									</div>
-									<div id="small-dialog5" class="mfp-hide">
-										<h3>Help</h3> 
-											<div class="help-grid">
-												<p>Suspendisse tristique magna ut urna pellentesque, ut egestas velit faucibus. Nullam mattis lectus ullamcorper dui dignissim, sit amet egestas orci ullamcorper.</p>
-											</div>
-											<div class="help-grids">
-												<div class="help-button-bottom">
-													<p><a href="#small-dialog4" class="play-icon popup-with-zoom-anim">Feedback</a></p>
-												</div>
-												<div class="help-button-bottom">
-													<p><a href="#small-dialog6" class="play-icon popup-with-zoom-anim">Lorem ipsum dolor sit amet</a></p>
-												</div>
-												<div class="help-button-bottom">
-													<p><a href="#small-dialog6" class="play-icon popup-with-zoom-anim">Nunc vitae rutrum enim</a></p>
-												</div>
-												<div class="help-button-bottom">
-													<p><a href="#small-dialog6" class="play-icon popup-with-zoom-anim">Mauris at volutpat leo</a></p>
-												</div>
-												<div class="help-button-bottom">
-													<p><a href="#small-dialog6" class="play-icon popup-with-zoom-anim">Mauris vehicula rutrum velit</a></p>
-												</div>
-												<div class="help-button-bottom">
-													<p><a href="#small-dialog6" class="play-icon popup-with-zoom-anim">Aliquam eget ante non orci fac</a></p>
-												</div>
-											</div>
-									</div>
-									<div id="small-dialog6" class="mfp-hide">
-										<div class="video-information-text">
-											<h4>Video information & settings</h4>
-											<p>Suspendisse tristique magna ut urna pellentesque, ut egestas velit faucibus. Nullam mattis lectus ullamcorper dui dignissim, sit amet egestas orci ullamcorper.</p>
-											<ol>
-												<li>Nunc vitae rutrum enim. Mauris at volutpat leo. Vivamus dapibus mi ut elit fermentum tincidunt.</li>
-												<li>Nunc vitae rutrum enim. Mauris at volutpat leo. Vivamus dapibus mi ut elit fermentum tincidunt.</li>
-												<li>Nunc vitae rutrum enim. Mauris at volutpat leo. Vivamus dapibus mi ut elit fermentum tincidunt.</li>
-												<li>Nunc vitae rutrum enim. Mauris at volutpat leo. Vivamus dapibus mi ut elit fermentum tincidunt.</li>
-												<li>Nunc vitae rutrum enim. Mauris at volutpat leo. Vivamus dapibus mi ut elit fermentum tincidunt.</li>
-											</ol>
-										</div>
-									</div>
-									<script>
-											$(document).ready(function() {
-											$('.popup-with-zoom-anim').magnificPopup({
-												type: 'inline',
-												fixedContentPos: false,
-												fixedBgPos: true,
-												overflowY: 'auto',
-												closeBtnInside: true,
-												preloader: false,
-												midClick: true,
-												removalDelay: 300,
-												mainClass: 'my-mfp-zoom-in'
-											});
-																											
-											});
-									</script>	
+				<div class="file">
+					<a href="logout.php">Log Out</a>
 				</div>
-				<div class="signin">
-					<a href="#small-dialog" class="play-icon popup-with-zoom-anim">Sign In</a>
-					<div id="small-dialog" class="mfp-hide">
-						<h3>Login</h3>
-						<div class="social-sits">
-							<div class="facebook-button">
-								<a href="#">Connect with Facebook</a>
-							</div>
-							<div class="chrome-button">
-								<a href="#">Connect with Google</a>
-							</div>
-							<div class="button-bottom">
-								<p>New account? <a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Signup</a></p>
-							</div>
-						</div>
-						<div class="signup">
-							<form>
-								<input type="text" class="email" placeholder="Enter email / mobile" required="required" pattern="([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?"/>
-								<input type="password" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
-								<input type="submit"  value="LOGIN"/>
-							</form>
-							<div class="forgot">
-								<a href="#">Forgot password ?</a>
-							</div>
-						</div>
-						<div class="clearfix"> </div>
-					</div>
-				</div>
+
+			</div>
 				<div class="clearfix"> </div>
 			</div>
         </div>
@@ -244,32 +84,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       </div>
     </nav>
         <div class="col-sm-3 col-md-2 sidebar">
+			<div class="col-sm-3 col-md-2 sidebar">
 			<div class="top-navigation">
 				<div class="t-menu">MENU</div>
 				<div class="t-img">
-					<img src="images/lines.png" alt="" />
+					<img src="../images/lines.png" alt="" />
 				</div>
 				<div class="clearfix"> </div>
 			</div>
 				<div class="drop-navigation drop-navigation">
 				  <ul class="nav nav-sidebar">
-					<li><a href="index.php" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
-					<li><a href="shows.html" class="user-icon"><span class="glyphicon glyphicon-home glyphicon-blackboard" aria-hidden="true"></span>TV Shows</a></li>
+					<li class="active"><a href="index.php" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
+					<li><a href="#recommended" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Recommended</a></li>
+					<li><a href="topvideos.html" class="user-icon"><span class="glyphicon glyphicon-home glyphicon-blackboard" aria-hidden="true"></span>Top Videos</a></li>
 					<li><a href="history.html" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>History</a></li>
-					<li><a href="#" class="menu1"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>Movies<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
-						<ul class="cl-effect-2">
-							<li><a href="movies.html">English</a></li>                                             
-							<li><a href="movies.html">Chinese</a></li>
-							<li><a href="movies.html">Hindi</a></li> 
-						</ul>
-						<!-- script-for-menu -->
-						<script>
-							$( "li a.menu1" ).click(function() {
-							$( "ul.cl-effect-2" ).slideToggle( 300, function() {
-							// Animation complete.
-							});
-							});
-						</script>
 					<li><a href="#" class="menu"><span class="glyphicon glyphicon-film glyphicon-king" aria-hidden="true"></span>Sports<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
 						<ul class="cl-effect-1">
 							<li><a href="sports.html">Football</a></li>                                             
@@ -285,8 +113,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							});
 							});
 						</script>
-					<li><a href="movies.html" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Songs</a></li>
-					<li><a href="news.html" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>News</a></li>
+					
 				  </ul>
 				  <!-- script-for-menu -->
 						<script>
@@ -296,20 +123,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							});
 							});
 						</script>
-					<div class="side-bottom">
-						<div class="side-bottom-icons">
-							<ul class="nav2">
-								<li><a href="#" class="facebook"> </a></li>
-								<li><a href="#" class="facebook twitter"> </a></li>
-								<li><a href="#" class="facebook chrome"> </a></li>
-								<li><a href="#" class="facebook dribbble"> </a></li>
-							</ul>
-						</div>
-						<div class="copyright">
-							<p>Copyright © 2015 My Play. All Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
-						</div>
 					</div>
-				</div>
+				
+			</div>
+        </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="show-top-grids">
@@ -325,7 +142,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						echo"	
 			         			<div class='video-grid'>		         			
 			         			<video id='myVideo' width='720' controls>
-								  <source src='video/".$row["Judul"].".".$row['Format']."' type='video/".$row['Format']."'>	  
+								  <source src='../video/".$row["Judul"].".".$row['Format']."' type='video/".$row['Format']."'>	  
 								</video>									
 								</div>  																							
 							";
@@ -333,7 +150,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			         	echo"	
 			         			<div class='video-grid'>		         			
 			         			<video id='myVideo' width='720' controls>
-								  <source src='video/".$row["Judul"].".".$row['Format']."#t=".$_GET["t"]."' type='video/".$row['Format']."'>	  
+								  <source src='../video/".$row["Judul"].".".$row['Format']."#t=".$_GET["t"]."' type='video/".$row['Format']."'>	  
 								</video>									
 								</div>  																							
 							";
@@ -343,91 +160,95 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="song-grid-right">	
 					</div>
 					<div class="clearfix"> </div>
-					<div class="published">
-					<div class="share">
-						<button id="myButton1">Share</button>
-						<script>
-							$(document).ready(function(){
-							$('#myButton1').click(function(){
-								$('#sharing').toggle();
-								var x = document.URL;
-								document.getElementById("shareit").value = x;    
-							});
-							});
-						</script>
-					</div>
-					<div class="share" id="sharing" style="display: none;">								
-							<input type="text" id="shareit">
+					<div class="published">						
+						<div class="share">
+							<button id="myButton1">Share</button>
+							<script>
+								$(document).ready(function(){
+								$('#myButton1').click(function(){
+									$('#sharing').toggle();
+									$('#sharing1').toggle();
+									var x = document.URL;
+									var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
+									var link = sharer.concat(x)								
+									document.getElementById("shareit").value = x;
+									document.getElementById("sharelink").href = link;
+								});
+								});
+							</script>
+						</div>				
+						<div class="share" id="sharing1" style="display: none;">
+							<a id="sharelink" target="_blank">
+								<img src="../images/fb.png" />
+							</a>
+						</div>						
+						<div class="share" id="sharing" style="display: none;">								
+							<input type="text" id="shareit">							
 							<button onclick="getStartTime()" type="button">Start Time</button>
 							<input type="text" id="startTime">
 							<button onclick="getEndTime()" type="button">End Time</button>
 							<input type="text" id="endTime">
 							
 							<script>
-							var vid = document.getElementById("myVideo");
+								var vid = document.getElementById("myVideo");
 
-							function myFunction() {
-								var elem = document.getElementById("myButton1");
-							    var x = document.URL;
-							    var str3 = "&";
-							    var str1 = "t=";
-							    var str2 = ",";
-							    var start = document.getElementById("startTime").value;
-							    var end = document.getElementById("endTime").value;
-							    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(end))));
-							    if (elem.value=="Share It"){
-							    	document.getElementById("shareit").value = url;    
-							    	elem.value = "Copy";
-							    }
-							    
-							}							
-							
-							function getStartTime() { 
-							    document.getElementById("startTime").value = parseInt(vid.currentTime);
-							    var x = document.URL;
-							    var str3 = "&";
-							    var str1 = "t=";
-							    var url = x.concat(str3.concat(str1.concat(parseInt(vid.currentTime))));
-							    document.getElementById("shareit").value = url;    
-							} 
+								function myFunction() {
+									var elem = document.getElementById("myButton1");
+								    var x = document.URL;
+								    var str3 = "&";
+								    var str1 = "t=";
+								    var str2 = ",";
+								    var start = document.getElementById("startTime").value;
+								    var end = document.getElementById("endTime").value;
+								    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(end))));
+								    var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
+									var link = sharer.concat(url)
+								    if (elem.value=="Share It"){
+								    	document.getElementById("shareit").value = url;    
+										document.getElementById("sharelink").href = link;
+								    	elem.value = "Copy";
+								    }
+								    
+								}							
+								
+								function getStartTime() { 
+								    document.getElementById("startTime").value = parseInt(vid.currentTime);
+								    var x = document.URL;
+								    x = x.slice(0, -4);
+								    var str3 = "&";
+								    var str1 = "t=";
+								    var url = x.concat(str3.concat(str1.concat(parseInt(vid.currentTime))));
+								    var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
+									var link = sharer.concat(url)
+								    document.getElementById("shareit").value = url;
+									document.getElementById("sharelink").href = link;
+								} 
 
-							function getEndTime() { 
-							    document.getElementById("endTime").value = parseInt(vid.currentTime);
-							    var x = document.URL;
-							    var str3 = "&";
-							    var str1 = "t=";
-							    var str2 = ",";
-							    var start = document.getElementById("startTime").value;    
-							    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(parseInt(vid.currentTime)))));
-							    document.getElementById("shareit").value = url;    
-							} 
+								function getEndTime() { 
+								    document.getElementById("endTime").value = parseInt(vid.currentTime);
+								    var x = document.URL;
+								    x = x.slice(0, -4);
+								    var str3 = "&";
+								    var str1 = "t=";
+								    var str2 = ",";
+								    var start = document.getElementById("startTime").value;    
+								    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(parseInt(vid.currentTime)))));
+								    var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
+									var link = sharer.concat(url)
+								    document.getElementById("shareit").value = url;    
+									document.getElementById("sharelink").href = link;							    
+								} 
 							</script> 
-						</div>
-							<script>
-								$(document).ready(function () {
-									size_li = $("#myList li").size();
-									x=1;
-									$('#myList li:lt('+x+')').show();
-									$('#loadMore').click(function () {
-										x= (x+1 <= size_li) ? x+1 : size_li;
-										$('#myList li:lt('+x+')').show();
-									});
-									$('#showLess').click(function () {
-										x=(x-1<0) ? 1 : x-1;
-										$('#myList li').not(':lt('+x+')').hide();
-									});
-								});
-							</script>							
+						</div>						
 					</div>
 					<div class="all-comments">
 						<div class="all-comments-info">
-							<a href="#">All Comments (8,657)</a>
+							<a href="#">Comments <?php echo mysqli_num_rows($result_comment) ?></a>
 							<div class="box">
-								<form>
-									<input type="text" placeholder="Name" required=" ">			           					   
-									<input type="text" placeholder="Email" required=" ">
-									<input type="text" placeholder="Phone" required=" ">
-									<textarea placeholder="Message" required=" "></textarea>
+								<form action="insert_comment.php" method="POST">
+									<input type="hidden" value="<?php echo $index ?>" name="id_video">			           					   
+									<input type="hidden" value="<?php echo $_SESSION['user'] ?>" name="id_user">									
+									<textarea rows="4" cols="50" placeholder="Message" name="message"></textarea>
 									<input type="submit" value="SEND">
 									<div class="clearfix"> </div>
 								</form>
@@ -440,92 +261,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</ul>
 							</div>
 						</div>
-						<div class="media-grids">
-							<div class="media">
-								<h5>Tom Brown</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
+						<?php while($row_comment = $result_comment->fetch_assoc()) {
+							echo "
+								<div class='media-grids'>
+									<div class='media'>
+										<h5>".$row_comment['Id_User']."</h5>
+										<div class='media-body'>
+											<p>".$row_comment['Message']."</p>
+											<span>Posted on : ".$row_comment['Insert_Time']."</span>
+										</div>
+									</div>							
 								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Steven Smith</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Marry Johne</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Peter Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-						</div>
+							";
+						}
+						?>
 					</div>
 				</div>
 				<div class="col-md-4 single-right">
@@ -533,7 +282,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="single-grid-right">
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r1.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r1.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -544,7 +293,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r2.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r2.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -555,7 +304,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r3.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r3.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -566,7 +315,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r4.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r4.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -577,7 +326,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r5.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r5.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -588,7 +337,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r6.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r6.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -599,7 +348,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r1.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r1.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -610,7 +359,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r2.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r2.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -621,7 +370,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r3.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r3.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -632,7 +381,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r4.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r4.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -643,7 +392,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r5.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r5.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -654,7 +403,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="single-right-grids">
 							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="images/r6.jpg" alt="" /></a>
+								<a href="single.html"><img src="../images/r6.jpg" alt="" /></a>
 							</div>
 							<div class="col-md-8 single-right-grid-right">
 								<a href="single.html" class="title"> Nullam interdum metus</a>
@@ -1027,7 +776,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
   </body>
 </html>

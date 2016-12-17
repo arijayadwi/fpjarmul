@@ -12,6 +12,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	$index = $_GET['ID'];
 	$sql = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video Where Indexes = $index";
 	$result = $conn->query($sql);
+	$sql_comment = "SELECT Id_User, Message, Insert_Time FROM Comment Where Id_Video = $index";	
+	$result = $conn->query($sql);
+	$result_comment = $conn->query($sql_comment);
 	function curPageURL() {
 	 $pageURL = 'http';
 	 if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
@@ -343,192 +346,110 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="song-grid-right">	
 					</div>
 					<div class="clearfix"> </div>
-					<div class="published">
-					<div class="share">
-						<button id="myButton1">Share</button>
-						<script>
-							$(document).ready(function(){
-							$('#myButton1').click(function(){
-								$('#sharing').toggle();
-								var x = document.URL;
-								document.getElementById("shareit").value = x;    
-							});
-							});
-						</script>
-					</div>
-					<!-- share pake API facebook -->
-
-					<a href="http://www.facebook.com/sharer/sharer.php?u=http://192.168.0.16/fpjarmul/views.php?ID=1&t=0&t=0" target="_blank"><img src="images/rffGp.png" /></a>
-					<div class="share" id="sharing" style="display: none;">								
-							<input type="text" id="shareit">
+					<div class="published">						
+						<div class="share">
+							<button id="myButton1">Share</button>
+							<script>
+								$(document).ready(function(){
+								$('#myButton1').click(function(){
+									$('#sharing').toggle();
+									$('#sharing1').toggle();
+									var x = document.URL;
+									var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
+									var link = sharer.concat(x)								
+									document.getElementById("shareit").value = x;
+									document.getElementById("sharelink").href = link;
+								});
+								});
+							</script>
+						</div>				
+						<div class="share" id="sharing1" style="display: none;">
+							<a id="sharelink" target="_blank">
+								<img src="images/fb.png" />
+							</a>
+						</div>						
+						<div class="share" id="sharing" style="display: none;">								
+							<input type="text" id="shareit">							
 							<button onclick="getStartTime()" type="button">Start Time</button>
 							<input type="text" id="startTime">
 							<button onclick="getEndTime()" type="button">End Time</button>
 							<input type="text" id="endTime">
 							
 							<script>
-							var vid = document.getElementById("myVideo");
+								var vid = document.getElementById("myVideo");
 
-							function myFunction() {
-								var elem = document.getElementById("myButton1");
-							    var x = document.URL;
-							    var str3 = "&";
-							    var str1 = "t=";
-							    var str2 = ",";
-							    var start = document.getElementById("startTime").value;
-							    var end = document.getElementById("endTime").value;
-							    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(end))));
-							    if (elem.value=="Share It"){
-							    	document.getElementById("shareit").value = url;    
-							    	elem.value = "Copy";
-							    }
-							    
-							}							
-							
-							function getStartTime() { 
-							    document.getElementById("startTime").value = parseInt(vid.currentTime);
-							    var x = document.URL;
-							    var str3 = "&";
-							    var str1 = "t=";
-							    var url = x.concat(str3.concat(str1.concat(parseInt(vid.currentTime))));
-							    document.getElementById("shareit").value = url;    
-							} 
+								function myFunction() {
+									var elem = document.getElementById("myButton1");
+								    var x = document.URL;
+								    var str3 = "&";
+								    var str1 = "t=";
+								    var str2 = ",";
+								    var start = document.getElementById("startTime").value;
+								    var end = document.getElementById("endTime").value;
+								    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(end))));
+								    var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
+									var link = sharer.concat(url)
+								    if (elem.value=="Share It"){
+								    	document.getElementById("shareit").value = url;    
+										document.getElementById("sharelink").href = link;
+								    	elem.value = "Copy";
+								    }
+								    
+								}							
+								
+								function getStartTime() { 
+								    document.getElementById("startTime").value = parseInt(vid.currentTime);
+								    var x = document.URL;
+								    x = x.slice(0, -4);
+								    var str3 = "&";
+								    var str1 = "t=";
+								    var url = x.concat(str3.concat(str1.concat(parseInt(vid.currentTime))));
+								    var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
+									var link = sharer.concat(url)
+								    document.getElementById("shareit").value = url;
+									document.getElementById("sharelink").href = link;
+								} 
 
-							function getEndTime() { 
-							    document.getElementById("endTime").value = parseInt(vid.currentTime);
-							    var x = document.URL;
-							    var str3 = "&";
-							    var str1 = "t=";
-							    var str2 = ",";
-							    var start = document.getElementById("startTime").value;    
-							    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(parseInt(vid.currentTime)))));
-							    document.getElementById("shareit").value = url;    
-							} 
+								function getEndTime() { 
+								    document.getElementById("endTime").value = parseInt(vid.currentTime);
+								    var x = document.URL;
+								    x = x.slice(0, -4);
+								    var str3 = "&";
+								    var str1 = "t=";
+								    var str2 = ",";
+								    var start = document.getElementById("startTime").value;    
+								    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(parseInt(vid.currentTime)))));
+								    var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
+									var link = sharer.concat(url)
+								    document.getElementById("shareit").value = url;    
+									document.getElementById("sharelink").href = link;							    
+								} 
 							</script> 
-						</div>
-							<script>
-								$(document).ready(function () {
-									size_li = $("#myList li").size();
-									x=1;
-									$('#myList li:lt('+x+')').show();
-									$('#loadMore').click(function () {
-										x= (x+1 <= size_li) ? x+1 : size_li;
-										$('#myList li:lt('+x+')').show();
-									});
-									$('#showLess').click(function () {
-										x=(x-1<0) ? 1 : x-1;
-										$('#myList li').not(':lt('+x+')').hide();
-									});
-								});
-							</script>							
-					</div>
+						</div>						
+					</div>					
 					<div class="all-comments">
 						<div class="all-comments-info">
-							<a href="#">All Comments (8,657)</a>
+							<a>Comments <?php echo mysqli_num_rows($result_comment) ?></a>
 							<div class="box">
 								<form>
-									<input type="text" placeholder="Name" required=" ">			           					   
-									<input type="text" placeholder="Email" required=" ">
-									<input type="text" placeholder="Phone" required=" ">
-									<textarea placeholder="Message" required=" "></textarea>
-									<input type="submit" value="SEND">
-									<div class="clearfix"> </div>
+									Sign In To Comment
 								</form>
-							</div>
-							<div class="all-comments-buttons">
-								<ul>
-									<li><a href="#" class="top">Top Comments</a></li>
-									<li><a href="#" class="top newest">Newest First</a></li>
-									<li><a href="#" class="top my-comment">My Comments</a></li>
-								</ul>
-							</div>
+							</div>							
 						</div>
-						<div class="media-grids">
-							<div class="media">
-								<h5>Tom Brown</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
+						<?php while($row_comment = $result_comment->fetch_assoc()) {
+							echo "
+								<div class='media-grids'>
+									<div class='media'>
+										<h5>".$row_comment['Id_User']."</h5>
+										<div class='media-body'>
+											<p>".$row_comment['Message']."</p>
+											<span>Posted on : ".$row_comment['Insert_Time']."</span>
+										</div>
+									</div>							
 								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Steven Smith</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Marry Johne</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Peter Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-						</div>
+							";
+						}
+						?>
 					</div>
 				</div>
 				<div class="col-md-4 single-right">
