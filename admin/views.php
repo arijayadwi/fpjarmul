@@ -12,6 +12,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	session_start();
 	if(!isset($_SESSION['user'])) header('Location: ../index.php');
 	$index = $_GET['ID'];
+	$quality = $_GET['quality'];
 	$sql = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video Where Indexes = $index";
 	$sql_comment = "SELECT Id_User, Message, Insert_Time FROM Comment Where Id_Video = $index";	
 	$result = $conn->query($sql);
@@ -142,10 +143,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					";
 					if($_GET["t"] == 0 ){
+						//echo "'../video/".$row["Judul"]."_".$quality.".".$row['Format']."'";
 						echo"	
 			         			<div class='video-grid'>		         			
 			         			<video id='myVideo' width='720' controls>
-								  <source src='../video/".$row["Judul"].".".$row['Format']."' type='video/".$row['Format']."'>	  
+								  <source src='../video/".$row["Judul"]."_".$quality.".".$row['Format']."' type='video/".$row['Format']."'>	  
 								</video>									
 								</div>  																							
 							";
@@ -153,19 +155,53 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			         	echo"	
 			         			<div class='video-grid'>		         			
 			         			<video id='myVideo' width='720' controls>
-								  <source src='../video/".$row["Judul"].".".$row['Format']."#t=".$_GET["t"]."' type='video/".$row['Format']."'>	  
+								  <source src='../video/".$row["Judul"]."_".$quality.".".$row['Format']."#t=".$_GET["t"]."' type='video/".$row['Format']."'>	  
 								</video>									
 								</div>  																							
 							";
 						}
 			     	} ?>						
 					</div>
-					<div class="song-grid-right">	
+					<div class="song-grid-right">
 					</div>
 					<div class="clearfix"> </div>
-					<div class="published">						
+					<div class="published">
+						<button type="button" class="btn btn-info" id="low" onClick="reply_click(this.id)">Low</button>
+						<button type="button" class="btn btn-info" id="std" onClick="reply_click(this.id)">Standard</button>
+						<button type="button" class="btn btn-info" id="high" onClick="reply_click(this.id)">High</button>
+
+						<script type="text/javascript">
+						function reply_click(clicked_id)
+						{
+							var str = "views.php?";
+							var str1 = "t=";
+							var strAnd = "&";
+							var str2 = "ID=";
+							//var str4 = "\"";
+							var str3 = "quality=";
+							var ID = '<?php echo $index;?>';
+							var t = '<?php echo $_GET["t"];?>';
+							
+						    if(clicked_id=="low"){
+						    	//alert(str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat(str4).concat("low").concat(str4)))));
+						    	var url = str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat("low"))));
+						    	window.location.href = url;
+						    }else if(clicked_id=="std"){
+						    	//alert(str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat(str4).concat("med").concat(str4)))));
+						    	var url = str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat("med"))));
+						    	window.location.href = url;
+						    }else if(clicked_id=="high"){
+						    	//alert(str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat(str4).concat("high").concat(str4)))));
+						    	var url = str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat("high"))));
+						    	window.location.href = url;
+						    
+						    }
+						    //
+						}
+						</script>
+						<br></br>						
 						<div class="share">
-							<button id="myButton1">Share</button>
+							<button type="button" class="btn btn-success" id="myButton1">Share</button>
 							<script>
 								$(document).ready(function(){
 								$('#myButton1').click(function(){
@@ -244,6 +280,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</script> 
 						</div>						
 					</div>
+
 					<div class="all-comments">
 						<div class="all-comments-info">
 							<a href="#">Comments <?php echo mysqli_num_rows($result_comment) ?></a>
