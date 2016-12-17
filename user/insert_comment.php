@@ -11,4 +11,4 @@ $time = date("Y-m-d H:i:s");
 $insert = "INSERT INTO Comment (id_video, id_user, message, insert_time) VALUES ('$id_video','$id_user','$message','$time')";
 $result = mysqli_query($conn, $insert);
 
-header('Location: views.php?ID='.$id_video.'&t=0&quality=med');
+header('Location: views.php?ID='.$id_video.'&quality=med&t=0');

@@ -183,16 +183,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							var t = '<?php echo $_GET["t"];?>';
 							
 						    if(clicked_id=="low"){
-						    	//alert(str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat(str4).concat("low").concat(str4)))));
-						    	var url = str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat("low"))));
+						    	//alert(str.concat(str2.concat(ID.concat(strAnd).concat(str3).concat("low").concat(strAnd).concat(str1).concat(t))));
+						    	var url = str.concat(str2.concat(ID.concat(strAnd).concat(str3).concat("low").concat(strAnd).concat(str1).concat(t)));
 						    	window.location.href = url;
 						    }else if(clicked_id=="std"){
 						    	//alert(str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat(str4).concat("med").concat(str4)))));
-						    	var url = str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat("med"))));
+						    	var url = str.concat(str2.concat(ID.concat(strAnd).concat(str3).concat("med").concat(strAnd).concat(str1).concat(t)));
 						    	window.location.href = url;
 						    }else if(clicked_id=="high"){
 						    	//alert(str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat(str4).concat("high").concat(str4)))));
-						    	var url = str.concat(str2.concat(ID.concat(strAnd.concat(str1).concat(t).concat(strAnd).concat(str3).concat("high"))));
+						    	var url = str.concat(str2.concat(ID.concat(strAnd).concat(str3).concat("high").concat(strAnd).concat(str1).concat(t)));
 						    	window.location.href = url;
 						    
 						    }
