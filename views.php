@@ -24,7 +24,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	 return $pageURL;
 	}
 ?>
-<title>My Play a Entertainment Category Flat Bootstrap Responsive Website Template | single :: w3layouts</title>
+<title>Sportify</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
@@ -356,6 +356,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							});
 						</script>
 					</div>
+					<!-- share pake API facebook -->
+
 					<a href="http://www.facebook.com/sharer/sharer.php?u=http://192.168.0.16/fpjarmul/views.php?ID=1&t=0&t=0" target="_blank"><img src="images/rffGp.png" /></a>
 					<div class="share" id="sharing" style="display: none;">								
 							<input type="text" id="shareit">
