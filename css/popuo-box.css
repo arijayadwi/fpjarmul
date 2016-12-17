@@ -466,7 +466,7 @@ button::-moz-focus-inner {
     position: relative;
     padding: 2em 0 0 6em;
     float: right !important;
-    width: 50%;
+    width: 100%;
     border-left: solid 1px #E4E4E4;
     text-align: left;
 }

@@ -55,53 +55,40 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			<div class="header-top-right">
 				<div class="signin">
-					<a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Sign Up</a>
+					<a href="#small-dialog3" class="play-icon popup-with-zoom-anim">Sign Up</a>
 					<!-- pop-up-box -->
 									<script type="text/javascript" src="js/modernizr.custom.min.js"></script>    
 									<link href="css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
 									<script src="js/jquery.magnific-popup.js" type="text/javascript"></script>
 									<!--//pop-up-box -->
-									<div id="small-dialog2" class="mfp-hide">
+									<!--div id="small-dialog2" class="mfp-hide">
 										<h3>Create Account</h3> 
 										<div class="social-sits">
-											<div class="facebook-button">
-												<a href="#">Connect with Facebook</a>
-											</div>
-											<div class="chrome-button">
-												<a href="#">Connect with Google</a>
-											</div>
 											<div class="button-bottom">
-												<p>Already have an account? <a href="#small-dialog" class="play-icon popup-with-zoom-anim">Login</a></p>
+												
 											</div>
 										</div>
 										<div class="signup">
 											<form>
-												<input type="text" class="email" placeholder="Mobile Number" maxlength="10" pattern="[1-9]{1}\d{9}" title="Enter a valid mobile number" />
+												<input type="text" class="email" placeholder="Email" maxlength="100" title="Enter a valid email address" />
+												<p>Already have an account? <a href="#small-dialog" class="play-icon popup-with-zoom-anim">Login</a></p>
 											</form>
 											<div class="continue-button">
 												<a href="#small-dialog3" class="hvr-shutter-out-horizontal play-icon popup-with-zoom-anim">CONTINUE</a>
 											</div>
 										</div>
 										<div class="clearfix"> </div>
-									</div>	
+									</div-->	
 									<div id="small-dialog3" class="mfp-hide">
-										<h3>Create Account</h3> 
-										<div class="social-sits">
-											<div class="facebook-button">
-												<a href="#">Connect with Facebook</a>
-											</div>
-											<div class="chrome-button">
-												<a href="#">Connect with Google</a>
-											</div>
-											<div class="button-bottom">
-												<p>Already have an account? <a href="#small-dialog" class="play-icon popup-with-zoom-anim">Login</a></p>
-											</div>
-										</div>
+										<h3>Create Account</h3>
 										<div class="signup">
-											<form>
-												<input type="text" class="email" placeholder="Email" required="required" pattern="([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?" title="Enter a valid email"/>
-												<input type="password" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
-												<input type="text" class="email" placeholder="Mobile Number" maxlength="10" pattern="[1-9]{1}\d{9}" title="Enter a valid mobile number" />
+											<form action="signup.php">
+												<input type="text" class="email" name ="Name" placeholder="Nama" required="required" title="Enter a valid email"/>
+												<input type="password" placeholder="Password" name="Password" required="required" title="Minimum 6 characters required" autocomplete="off" />
+												<input type="text" class="email" placeholder="Email" name="Email" maxlength="100" title="Enter a valid mobile number" />
+												<div class="button-bottom">
+													<p>Already have an account? <a href="#small-dialog" class="play-icon popup-with-zoom-anim">Login</a></p>
+												</div>
 												<input type="submit"  value="Sign Up"/>
 											</form>
 										</div>
@@ -110,12 +97,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<div id="small-dialog7" class="mfp-hide">
 										<h3>Create Account</h3> 
 										<div class="social-sits">
-											<div class="facebook-button">
-												<a href="#">Connect with Facebook</a>
-											</div>
-											<div class="chrome-button">
-												<a href="#">Connect with Google</a>
-											</div>
 											<div class="button-bottom">
 												<p>Already have an account? <a href="#small-dialog" class="play-icon popup-with-zoom-anim">Login</a></p>
 											</div>
@@ -200,21 +181,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<a href="#small-dialog" class="play-icon popup-with-zoom-anim">Sign In</a>
 					<div id="small-dialog" class="mfp-hide">
 						<h3>Login</h3>
-						<div class="social-sits">
-							<div class="facebook-button">
-								<a href="#">Connect with Facebook</a>
-							</div>
-							<div class="chrome-button">
-								<a href="#">Connect with Google</a>
-							</div>
-							<div class="button-bottom">
-								<p>New account? <a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Signup</a></p>
-							</div>
-						</div>
 						<div class="signup">
 							<form action="login.php">
-								<input type="text" class="email" name="username" placeholder="Username" required="required" pattern="([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?"/>
-								<input type="password" name="password" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
+								<input type="text" class="email" name="username" placeholder="Username" required="required"/>
+								<input type="password" name="password" placeholder="Password" required="required" />
 								<input type="submit" value="LOGIN"/>
 							</form>
 							<div class="forgot">
