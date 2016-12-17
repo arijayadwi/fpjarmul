@@ -70,7 +70,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<h5>Welcome, <?php echo $_SESSION['user'];?></h5>
 				</div>	
 				<div class="file">
-					<a href="upload.php">Upload</a>
+					<a href="upload_form.php">Upload</a>
 				</div>
 				<div class="file">
 					<a href="logout.php">Log Out</a>
