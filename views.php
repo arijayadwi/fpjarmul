@@ -356,6 +356,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							});
 						</script>
 					</div>
+					<a href="http://www.facebook.com/sharer/sharer.php?u=http://192.168.0.16/fpjarmul/views.php?ID=1&t=0&t=0" target="_blank"><img src="images/rffGp.png" /></a>
 					<div class="share" id="sharing" style="display: none;">								
 							<input type="text" id="shareit">
 							<button onclick="getStartTime()" type="button">Start Time</button>
