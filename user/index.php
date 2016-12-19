@@ -56,7 +56,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			<div class="header-top-right">
 				<div class="file">
-					<p><?php echo $_SESSION['user'];?></p>
+					<h4>Welcome, <?php echo $_SESSION['user'];?>&nbsp;</h4>
 				</div>	
 				<div class="file">
 					<a href="logout.php">Log Out</a>
@@ -78,24 +78,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="drop-navigation drop-navigation">
 				  <ul class="nav nav-sidebar">
 					<li class="active"><a href="index.php" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
-					<li><a href="#recommended" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Recommended</a></li>
-					<li><a href="topvideos.html" class="user-icon"><span class="glyphicon glyphicon-home glyphicon-blackboard" aria-hidden="true"></span>Top Videos</a></li>
-					<li><a href="history.html" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>History</a></li>
-					<li><a href="#" class="menu"><span class="glyphicon glyphicon-film glyphicon-king" aria-hidden="true"></span>Sports<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
-						<ul class="cl-effect-1">
-							<li><a href="sports.html">Football</a></li>                                             
-							<li><a href="sports.html">Cricket</a></li>
-							<li><a href="sports.html">Tennis</a></li> 
-							<li><a href="sports.html">Shattil</a></li>  
-						</ul>
-						<!-- script-for-menu -->
-						<script>
-							$( "li a.menu" ).click(function() {
-							$( "ul.cl-effect-1" ).slideToggle( 300, function() {
-							// Animation complete.
-							});
-							});
-						</script>
+					<li><a href="#" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>Coming Soon</a></li>
+					
 					
 				  </ul>
 				  <!-- script-for-menu -->
@@ -251,22 +235,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			</div>
 		<!-- footer -->
-			<div class="footer">
-				<div class="footer-grids">
-					<div class="footer-top">
-						<div class="footer-top-nav">
-							<ul>
-								<li><a>CREATED BY KELOMPOK FP03</a></li>
-								<li><a>I GUSTI NGURAH ARYA BAWANTA 5113100007</a></li>
-								<li><a></a></li>
-								<li><a>Creators</a></li>
-								<li><a>Advertise</a></li>
-								<li><a>BAGUS PUTRA MAYANI 5113100125</a></li>
-							</ul>
-						</div>
-					</div>					
-				</div>
-			</div>
+			<?php include("footer.php"); ?>
 			<!-- //footer -->
 		</div>
 		<div class="clearfix"> </div>
