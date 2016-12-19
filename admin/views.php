@@ -316,9 +316,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<p>".$row_comment['Message']."</p>
 											<span>											
 												<form action='delete_comment.php' method='POST'>
-													<input type='hidden' value='".$row_comment['Id']."'' name='Id_Comment'>
-													<input type='hidden' value='".$index."'' name='id_video'>
-													<input type='submit' value='Delete'>
+													<input type='hidden' value='".$row_comment['Id']."' name='Id_Comment'>
+													<input type='hidden' value='".$index."' name='id_video'>
+													<input class='btn btn-danger btn-xs' type='submit' value='Delete'>
 													<div class='clearfix'> </div>
 												</form>	
 											Posted on : ".$row_comment['Insert_Time']."										
