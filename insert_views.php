@@ -17,4 +17,4 @@ $update = 	"	UPDATE Video
 			";
 $result_update = mysqli_query($conn, $update);
 
-header('Location: views.php?ID='.$id_video.'&t='.$t.'');
+header('Location: views.php?ID='.$id_video.'&quality=med&t='.$t.'');

@@ -7,7 +7,7 @@
 	if(!isset($_SESSION['user'])) header('Location: ../index.php');
 	include("../connect.php");
 	$sql = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video ORDER BY RAND() LIMIT 2";
-	$sql1 = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video";
+	$sql1 = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video ORDER BY Indexes DESC LIMIT 4";
 	$result = $conn->query($sql);
 	$result1 = $conn->query($sql1);
 ?>
@@ -197,7 +197,22 @@
 				</div>
 			</div>
 			<!-- footer -->
-			<?php include("footer.php");?>
+			<div class="footer">
+				<div class="footer-grids">
+					<div class="footer-top">
+						<div class="footer-top-nav">
+							<ul>
+								<li><a>CREATED BY KELOMPOK FP03</a></li>
+								<li><a>I GUSTI NGURAH ARYA BAWANTA 5113100007</a></li>
+								<li><a></a></li>
+								<li><a>Creators</a></li>
+								<li><a>Advertise</a></li>
+								<li><a>BAGUS PUTRA MAYANI 5113100125</a></li>
+							</ul>
+						</div>
+					</div>					
+				</div>
+			</div>
 			<!-- //footer -->
 		</div>
 		<div class="clearfix"> </div>

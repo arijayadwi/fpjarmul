@@ -14,8 +14,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	$index = $_GET['ID'];
 	$quality = $_GET['quality'];
 	$sql = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video Where Indexes = $index";
-	$sql_comment = "SELECT Id_User, Message, Insert_Time FROM Comment Where Id_Video = $index";	
+	$sql_next = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video WHERE NOT Indexes = $index ORDER BY RAND() Limit 4";
+	$sql_comment = "SELECT Id, Id_User, Message, Insert_Time FROM Comment Where Id_Video = $index";	
 	$result = $conn->query($sql);
+	$result_next = $conn->query($sql_next);
 	$result_comment = $conn->query($sql_comment);
 	
 	function curPageURL() {
@@ -199,7 +201,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						    //
 						}
 						</script>
-						<br></br>						
+						<br></br>
+						<div class="share">
+							<form action="delete_video.php" method="POST">
+								<input type="hidden" value="<?php echo $index ?>" name="id_video">
+								<input type="submit" value="Delete">
+								<div class="clearfix"> </div>
+							</form>
+						</div>							
 						<div class="share">
 							<button type="button" class="btn btn-success" id="myButton1">Share</button>
 							<script>
@@ -208,10 +217,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									$('#sharing').toggle();
 									$('#sharing1').toggle();
 									var x = document.URL;
+									var x = x.replace("://","%3A%2F%2F");
+									var x = x.replace("/Sportify/admin/views.php","%2FSportify%2Fadmin%2Fviews.php");
+									var x = x.replace("?","%3F");
+									var x = x.replace("ID=","ID%3D");
+									var x = x.replace("&quality=","%26quality%3D");
+									var x = x.replace("&t=","%26t%3D");
 									var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
 									var link = sharer.concat(x)								
 									document.getElementById("shareit").value = x;
-									document.getElementById("sharelink").href = link;
+									document.getElementById("sharelink").href = link;									
 								});
 								});
 							</script>
@@ -256,7 +271,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								    x = x.slice(0, -4);
 								    var str3 = "&";
 								    var str1 = "t=";
-								    var url = x.concat(str3.concat(str1.concat(parseInt(vid.currentTime))));
+								    var url = x.concat(str3.concat(str1.concat(parseInt(vid.currentTime))));								    
+									var url = url.replace("://","%3A%2F%2F");
+									var url = url.replace("/Sportify/admin/views.php","%2FSportify%2Fadmin%2Fviews.php");
+									var url = url.replace("?","%3F");
+									var url = url.replace("ID=","ID%3D");
+									var url = url.replace("&quality=","%26quality%3D");
+									var url = url.replace("&t=","%26t%3D");
 								    var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
 									var link = sharer.concat(url)
 								    document.getElementById("shareit").value = url;
@@ -272,13 +293,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								    var str2 = ",";
 								    var start = document.getElementById("startTime").value;    
 								    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(parseInt(vid.currentTime)))));
+								    var url = url.replace("://","%3A%2F%2F");
+									var url = url.replace("/Sportify/admin/views.php","%2FSportify%2Fadmin%2Fviews.php");
+									var url = url.replace("?","%3F");
+									var url = url.replace("ID=","ID%3D");
+									var url = url.replace("&quality=","%26quality%3D");
+									var url = url.replace("&t=","%26t%3D");
+								    var url = url.replace(",","%2C");
 								    var sharer = "http://www.facebook.com/sharer/sharer.php?u=";
 									var link = sharer.concat(url)
 								    document.getElementById("shareit").value = url;    
 									document.getElementById("sharelink").href = link;							    
 								} 
 							</script> 
-						</div>						
+						</div>
 					</div>
 
 					<div class="all-comments">
@@ -292,14 +320,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<input type="submit" value="SEND">
 									<div class="clearfix"> </div>
 								</form>
-							</div>
-							<div class="all-comments-buttons">
-								<ul>
-									<li><a href="#" class="top">Top Comments</a></li>
-									<li><a href="#" class="top newest">Newest First</a></li>
-									<li><a href="#" class="top my-comment">My Comments</a></li>
-								</ul>
-							</div>
+							</div>							
 						</div>
 						<?php while($row_comment = $result_comment->fetch_assoc()) {
 							echo "
@@ -308,7 +329,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<h5>".$row_comment['Id_User']."</h5>
 										<div class='media-body'>
 											<p>".$row_comment['Message']."</p>
-											<span>Posted on : ".$row_comment['Insert_Time']."</span>
+											<span>											
+												<form action='delete_comment.php' method='POST'>
+													<input type='hidden' value='".$row_comment['Id']."'' name='Id_Comment'>
+													<input type='hidden' value='".$index."'' name='id_video'>
+													<input type='submit' value='Delete'>
+													<div class='clearfix'> </div>
+												</form>	
+											Posted on : ".$row_comment['Insert_Time']."										
+											</span>								
 										</div>
 									</div>							
 								</div>
@@ -319,139 +348,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="col-md-4 single-right">
 					<h3>Up Next</h3>
-					<div class="single-grid-right">
+					<div class="single-grid-right">						
 						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r1.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r2.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views </p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r3.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r4.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r5.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r6.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author">By <a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r1.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r2.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r3.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r4.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r5.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="single-right-grids">
-							<div class="col-md-4 single-right-grid-left">
-								<a href="single.html"><img src="../images/r6.jpg" alt="" /></a>
-							</div>
-							<div class="col-md-8 single-right-grid-right">
-								<a href="single.html" class="title"> Nullam interdum metus</a>
-								<p class="author"><a href="#" class="author">John Maniya</a></p>
-								<p class="views">2,114,200 views</p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
+							<?php
+								while($row_next = $result_next->fetch_assoc()){									
+									echo "
+										<div class='single-right-grids'>
+											<div class='col-md-4 single-right-grid-left'>
+												<a href='insert_views.php?ID=". $row_next["Indexes"]."&t=0'><img src='../Thumbnail/". $row_next["Thumbnail"].".jpg' alt='' /></a>
+											</div>
+											<div class='col-md-8 single-right-grid-right'>
+												<a href='insert_views.php?ID=". $row_next["Indexes"]."&t=0' class='title'>".$row_next['Judul']."</a>
+												<p class='author'><a class='author'>".$row_next['Uploader']."</a></p>
+												<p class='views'>".$row_next['Views']." views</p>
+											</div>
+											<div class='clearfix'> </div>
+										</div>
+									";
+								}
+							?>							
+						</div>						
 					</div>
 				</div>
 				<div class="clearfix"> </div>
