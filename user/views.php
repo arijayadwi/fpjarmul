@@ -15,7 +15,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	$quality = $_GET['quality'];
 	$sql = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video Where Indexes = $index";
 	$sql_next = "SELECT Indexes,Judul, Uploader, Times, Views, Thumbnail, Format FROM Video WHERE NOT Indexes = $index ORDER BY RAND() Limit 4";
-	$sql_comment = "SELECT Id, Id_User, Message, Insert_Time FROM Comment Where Id_Video = $index";	
+	$sql_comment = "SELECT Id, Id_User, Message, Insert_Time FROM Comment Where Id_Video = $index order by Id Desc";	
 	$result = $conn->query($sql);
 	$result_next = $conn->query($sql_next);
 	$result_comment = $conn->query($sql_comment);
