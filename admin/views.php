@@ -201,8 +201,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									$('#sharing').toggle();
 									$('#sharing1').toggle();
 									var x = document.URL;
+									var x = x.replace("/admin","")
 									var x = x.replace("://","%3A%2F%2F");
-									var x = x.replace("/Sportify/admin/views.php","%2FSportify%2Fadmin%2Fviews.php");
+									var x = x.replace("/Sportify/views.php","%2FSportify%2Fviews.php");
 									var x = x.replace("?","%3F");
 									var x = x.replace("ID=","ID%3D");
 									var x = x.replace("&quality=","%26quality%3D");
@@ -258,7 +259,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								    var str1 = "t=";
 								    var url = x.concat(str3.concat(str1.concat(parseInt(vid.currentTime))));								    
 									var url = url.replace("://","%3A%2F%2F");
-									var url = url.replace("/Sportify/admin/views.php","%2FSportify%2Fadmin%2Fviews.php");
+									var x = x.replace("/admin","")
+									var url = url.replace("/Sportify/views.php","%2FSportify%2Fviews.php");
 									var url = url.replace("?","%3F");
 									var url = url.replace("ID=","ID%3D");
 									var url = url.replace("&quality=","%26quality%3D");
@@ -279,7 +281,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								    var start = document.getElementById("startTime").value;    
 								    var url = x.concat(str3.concat(str1.concat(start.concat(str2).concat(parseInt(vid.currentTime)))));
 								    var url = url.replace("://","%3A%2F%2F");
-									var url = url.replace("/Sportify/admin/views.php","%2FSportify%2Fadmin%2Fviews.php");
+								    var x = x.replace("/admin","")
+									var url = url.replace("/Sportify/views.php","%2FSportify%2Fviews.php");
 									var url = url.replace("?","%3F");
 									var url = url.replace("ID=","ID%3D");
 									var url = url.replace("&quality=","%26quality%3D");
